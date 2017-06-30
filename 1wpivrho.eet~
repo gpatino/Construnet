@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Library.Entidades;
+using Library.BaseDatos;
+using ConstrunetUnlimited.Common;
+using ConstrunetUnlimited.Common.Helper;
+
+namespace ConstrunetUnlimited
+{
+    public partial class Proyecto : BasePage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //SecureHttps.UtilizarSSLProtocol();
+            ValidarSesion();
+            Bitacorear.Guardar(ID_USUARIO_SESSION, Convert.ToInt32(Session["idrol"]), "Proyecto.aspx", "Revisar", "Proyecto", ConectionBD);
+            int idproyecto = 0;
+            try
+            {
+                if (!string.IsNullOrEmpty(this.Request.QueryString["IdProy"]))
+                {
+                    idproyecto = Convert.ToInt32(this.Request.QueryString["IdProy"]);
+                }
+                if (!this.IsPostBack)
+                {
+                    ValidarSesion();
+                    CargarInformacionProyecto(idproyecto);
+                    CargarNegociaciones(idproyecto);
+                    CargarConversaciones(idproyecto);
+                    CargarResponsables(idproyecto);
+                    CargarCliente(idproyecto);
+                    CargarImagenes(idproyecto);
+                    CargarMapas(idproyecto);
+                    CargarActividades(idproyecto);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void CargarInformacionProyecto(int idproyecto)
+        {
+            ProyectosBehaivor ItemProyecto = new ProyectosBehaivor();
+            ItemProyecto.Connection = ConectionBD;
+            int modo = 5;
+
+            //Obtener información General del Proyecto
+            List<ProyectosDatos> ProyectoLst = ItemProyecto.CN_fn_ProyectoInformacionCompletaxIdProyectoSel(idproyecto, modo);
+            if (ProyectoLst.Count > 0)
+            {
+                fecharegistrotxt.Text = ProyectoLst[0].fechaRegistro.ToString();
+                empresaraiztxt.Text = ProyectoLst[0].nombreEmpresa;
+                empresacontratistatxt.Text = ProyectoLst[0].nombreEmpresaContratista;
+                tipoobratxt.Text = ProyectoLst[0].tipoObra;
+                valorestimadotxt.Text = ProyectoLst[0].inversion.ToString();
+                sectortxt.Text = ProyectoLst[0].sectorEconomico;
+            }
+        }
+
+        protected void CargarNegociaciones(int idproyecto)
+        {
+
+        }
+
+        protected void CargarConversaciones(int idproyecto)
+        {
+
+        }
+
+        protected void CargarResponsables(int idproyecto)
+        {
+
+        }
+
+        protected void CargarCliente(int idproyecto)
+        {
+
+        }
+
+        protected void CargarImagenes(int idproyecto)
+        {
+
+        }
+
+        protected void CargarMapas(int idproyecto)
+        {
+
+        }
+
+        protected void CargarActividades(int idproyecto)
+        {
+
+        }
+
+        protected void SendMessageBtb_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
